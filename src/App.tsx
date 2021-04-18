@@ -1,17 +1,17 @@
-import React from 'react';
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
-import Layout from './components/List/List'
-
+import Layout from './components/Layout/Layout'
+import {CourseModel} from './mockfileModel'
 import './scss/App.scss';
 
 function App(props:any) {
+  const mockData: CourseModel = props.data;
   return (
-    <div className="App">
+    <>
       <Header />
-      <Layout data={props.data}/>
+      <Layout data={mockData}/>
       <Footer />
-    </div>
+    </>
   );
 }
 

@@ -1,15 +1,15 @@
 import Course from '../Course/Course'
 
-export const List = (props:any) => {
+export const Layout = (props:any) => {
   const list = props.data.map((value:any) => {
-    return <Course key={value.id} data={value} />;
+    return <Course key={value.id.toString()} data={value} />;
   });
 
   return (
-    <main className="wrap">
+    <main>
       <ul className="courses_list">{list}</ul>
     </main>
   )
 }
 
-export default List;
+export default Layout;

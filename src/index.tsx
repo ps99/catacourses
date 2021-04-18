@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import {mockCourses} from './mockfile'// eslint-disable-next-line
-import {CourseModel} from './mockfileModel'// eslint-disable-next-line
+import {mockCourses} from './mockfile'
 
 ReactDOM.render(
   <React.StrictMode>
