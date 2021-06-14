@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 import {mockCourses} from './mockfile'
 
+
+
 ReactDOM.render(
   <React.StrictMode>
     <App data={mockCourses} />

@@ -5,7 +5,7 @@ export const Course = (props:any) => {
       <div className="course_card">
         <div className="course_card__title">
           {title}
-          <em className="course_card__date">(Published on {date.toDateString()})</em>
+          <em className="course_card__date">(Published on {new Date(date).toDateString()})</em>
         </div>
         <div className="course_card__description">{description}</div>
         <div className="course_card__author">{author}</div>

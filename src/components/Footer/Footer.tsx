@@ -1,17 +1,19 @@
 import React from 'react';
+// import {apiStates, useApi} from './tools';
 
-const clickHandler = () => {
+const clickHandler = (props:any) => {
   console.log('Load more button is clicked!')
 }
 
-export const Footer = () => {
+export const Footer = (props:any) => {
+  const updateCurrentPage = props.updateCurrentPage
   return (
-    <div className="footer">
+    <footer className="footer">
       <div className="footer_loadmore">
-        <button onClick={clickHandler}>Load more</button>
+        <button onClick={updateCurrentPage}>Load more</button>
       </div>
       <p>&copy; {new Date().getFullYear()} This is Footer!</p>
-    </div>
+    </footer>
   )
 }
 
