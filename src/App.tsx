@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Layout from './components/Layout/Layout'
-// import {CourseModel} from './mockfileModel'
 import {apiStates, useApi} from './tools';
 import './scss/App.scss';
 
