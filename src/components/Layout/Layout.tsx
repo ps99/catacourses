@@ -1,14 +1,27 @@
-import Course from '../Course/Course'
+import Home from '../HomePage/Home';
+import Login from '../LoginPage/Login';
+import AddNewCourse from '../NewCoursePage/AddNewCourse';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
+import { useState } from 'react';
 
 export const Layout = (props:any) => {
-  const list = props.data.map((value:any) => {
-    return <Course key={value.id.toString()} data={value} />;
-  });
-
   return (
-    <main>
-      <ul className="courses_list">{list}</ul>
-    </main>
+    <Switch>
+      <Route path='/login'>
+        <Login />
+      </Route>
+      <Route path='/add'>
+        <AddNewCourse />
+      </Route>
+      <Route exact path='/'>
+        <Home data={props.data}/>
+      </Route>
+    </Switch>
   )
 }
 

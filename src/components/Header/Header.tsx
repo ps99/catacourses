@@ -1,17 +1,28 @@
-import logo from '../../images/logo.svg';
+import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 
-export const Header = () => {
+
+export const Header = (props:any) => {
+  let isLoggedIn = props.isLoggedIn();
+
   return (
-    <header className="header">
-      <a className="header_logo" href="/">
-        <img src={logo} alt="Logo" />
-      </a>
-      <nav>
+    <header>
+      <div className="header">
         <ul className="header_navbar">
-          <li><a href="/">Login</a></li>
-          <li><a href="/">Logout</a></li>
+          <li><NavLink exact to="/">Home</NavLink></li>
+          <li><NavLink to="/add">Add New Course</NavLink></li>
         </ul>
-      </nav>
+        <ul className="header_navbar align-right">
+          <li className="header_search">
+            <input type="search" placeholder="Search a course..." />
+          </li>
+          <li>{
+            isLoggedIn ?
+            <NavLink to="/logout">Logout</NavLink> :
+            <NavLink to="/login">Login</NavLink>
+          }</li>
+        </ul>
+      </div>
     </header>
   )
 }
