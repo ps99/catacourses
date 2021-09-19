@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useState } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,38 +8,39 @@ import {
   useHistory,
   useLocation
 } from 'react-router-dom';
-
-async function getAuth(authState:any) {
-  const obj = await authState && {
-    user: 'admin',
-    password: '12345',
-    message: 'Success. Logged in!'
-  }
-  return obj; 
-}
+import { AuthManager } from '../../services/Auth.services';
 
 export const Login = (props:any) => {
+  const {currentState} = props;
   const [authState, setAuthState] = useState({
-    user: '',
+    login: '',
     password: '',
     message: ''
   });
+
+  useEffect(() => {
+    if(currentState) {
+      history.push('/');
+    }
+  }, [props.currentState])
+
   const history = useHistory();
   const handleChange = (e:any) => {
     const {id, value} = e.target
+
     setAuthState({
       ...authState,
       [id]: value
     })
   }
+
   const handleSubmitClick = async (e:any) => {
     e.preventDefault();
-    
-    const user = await getAuth(authState);
-
+    const {login, password} = authState;
+    const user = await AuthManager().login(login, password);
     if(user) {
-      props.updateUser(user);
       history.push('/');
+      props.checkAuth();
     }
   }
 
@@ -53,7 +54,7 @@ export const Login = (props:any) => {
             className="form-control"
             type="text"
             placeholder="Login"
-            value={authState.user}
+            value={authState.login}
             autoComplete="off"
             onChange={handleChange} />
           <input

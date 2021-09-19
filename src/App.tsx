@@ -1,5 +1,5 @@
 
-import React, { useState, useContext, createContext } from 'react';
+import { useState, useContext, createContext, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,39 +13,37 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Layout from './components/Layout/Layout'
 import {apiStates, useApi} from './tools';
+import {AuthManager, IUser} from './services/Auth.services'
 import './scss/App.scss';
 
 
 
-function App(props:any) {
-  const [pageCount, setPageCount] = useState(1);
-  const [authState, setAuthState] = useState('default');
-  let { state, error, data } = useApi(pageCount);
+const App = () => {
+  const [authState, setAuthState] = useState<JsonWebKey | null>(null);
 
-  function updateCurrentPage() {
-    setPageCount(pageCount + 1);
+  async function checkAuth() {
+    let userData = null;
+
+    await AuthManager().check().then(user => {
+      userData = user
+      setAuthState(userData);
+    });
+
+    return userData;
   }
 
-  function checkAuth() {
-    return false;
-    // return authState.user === '' ? false : true
-  }
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
-  switch(state) {
-    case apiStates.ERROR:
-      return <div>ERROR: {error || 'General error'}</div>;
-    case apiStates.SUCCESS:
-      return (
-        <Router>
-          <Header isLoggedIn={checkAuth} />
-          <Layout data={data} updateCurrentPage={updateCurrentPage} />
-          <Footer />
-        </Router>
-      )
-    case apiStates.LOADING:
-      default:
-        return <div>loading..</div>;
-  };
+
+  return (
+    <Router>
+      <Header checkAuth={checkAuth} currentState={authState} />
+      <Layout checkAuth={checkAuth} currentState={authState} />
+      <Footer />
+    </Router>
+  )
 }
 
 export default App;

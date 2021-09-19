@@ -9,7 +9,7 @@ import {mockCourses} from './mockfile'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App data={mockCourses} />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

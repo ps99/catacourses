@@ -1,9 +1,28 @@
-import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import {AuthManager} from '../../services/Auth.services'
 
 
 export const Header = (props:any) => {
-  let isLoggedIn = props.isLoggedIn();
+  const [buttonName, setButtonName] = useState<any>('Login');
+  const {currentState} = props;
+console.log('Header: props: ',props, buttonName)
+  const prevButtonName = buttonName;
+  const handleLogout = async () => {
+    if(buttonName === 'Logout') {
+      AuthManager().logout();
+      props.checkAuth();
+      setButtonName('Login');
+    }
+  }
+
+  useEffect(() => {
+    currentState ? setButtonName('Logout') : setButtonName('Login');
+  }, [props.currentState]);
+
+  // useEffect(() => {
+  //   prevButtonName === buttonName ? setButtonName('Login') : setButtonName('Logout');
+  // });
 
   return (
     <header>
@@ -16,11 +35,9 @@ export const Header = (props:any) => {
           <li className="header_search">
             <input type="search" placeholder="Search a course..." />
           </li>
-          <li>{
-            isLoggedIn ?
-            <NavLink to="/logout">Logout</NavLink> :
-            <NavLink to="/login">Login</NavLink>
-          }</li>
+          <li>
+            <NavLink to="/login" onClick={handleLogout}>{buttonName}</NavLink>
+          </li>
         </ul>
       </div>
     </header>

@@ -1,7 +1,12 @@
 {
   "users": [
+    { "id": "admin", "name": "Lord", "password": "12345" },
     { "id": "pablo", "name": "Pablo", "password": "123456" },
     { "id": "mike", "name": "Mike", "password": "123456" }
+  ],
+  "info": [
+    {"id": "users_length", "data": 3},
+    {"id": "courses_length", "data": 12}
   ],
   "courses": [
     {

@@ -10,16 +10,17 @@ import {
 import { useState } from 'react';
 
 export const Layout = (props:any) => {
+  const {data, checkAuth, currentState} = props
   return (
     <Switch>
       <Route path='/login'>
-        <Login />
+        <Login checkAuth={checkAuth} currentState={currentState}/>
       </Route>
       <Route path='/add'>
         <AddNewCourse />
       </Route>
       <Route exact path='/'>
-        <Home data={props.data}/>
+        <Home data={data}/>
       </Route>
     </Switch>
   )
