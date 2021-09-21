@@ -2,15 +2,12 @@ import Home from '../HomePage/Home';
 import Login from '../LoginPage/Login';
 import AddNewCourse from '../NewCoursePage/AddNewCourse';
 import {
-  BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
-import { useState } from 'react';
 
 export const Layout = (props:any) => {
-  const {data, checkAuth, currentState} = props
+  const { checkAuth, currentState } = props
   return (
     <Switch>
       <Route path='/login'>
@@ -20,7 +17,7 @@ export const Layout = (props:any) => {
         <AddNewCourse />
       </Route>
       <Route exact path='/'>
-        <Home data={data}/>
+        <Home />
       </Route>
     </Switch>
   )

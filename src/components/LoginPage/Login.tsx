@@ -1,13 +1,5 @@
-import React, { useContext, createContext, useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
-} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AuthManager } from '../../services/Auth.services';
 
 export const Login = (props:any) => {

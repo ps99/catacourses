@@ -1,44 +1,65 @@
 
 import { useEffect, useState } from 'react';
-import {apiStates, useApi} from '../../tools';
+import { apiStates, useApi } from '../../tools';
 import Course from "../Course/Course";
 
-export const Home = (props:any) => {
-  const [pageCount, setPageCount] = useState(1);
-  let { state, error, data } = useApi(pageCount);
-  console.log(data)
+const LIMIT_OF_ITEMS = 9;
+let currentData:any = [];
 
-  const list = data.map((value:any) => {
+export const Home = () => {
+  const [dataToShow, setDataToShow] = useState([]);
+  const [pageCount, setPageCount] = useState(1);
+  const [visibility, setVisisbility] = useState(true);
+
+  useEffect(() => {
+    getDataByPage(pageCount).then(data => {
+      setPageCount(pageCount + 1);
+      loadData(data)
+      return true;
+    })
+  }, [])
+
+  const loadData = (newData:any) => {
+    currentData = [...currentData, ...newData]
+    setDataToShow(currentData)
+  }
+
+  const handleClick = ():void => {
+    setPageCount(pageCount + 1);
+    getDataByPage(pageCount).then(data => {
+      data.length < LIMIT_OF_ITEMS && setVisisbility(false);
+      loadData(data)
+      return true;
+    })
+  }
+
+  const getDataByPage = async (pageCount:number) => {
+    const baseUrl = `http://localhost:3000/courses?_page=${pageCount}&_limit=${LIMIT_OF_ITEMS}`;
+    const getJson = (resp: Response) => resp.json();
+    return fetch(baseUrl).then(getJson);
+  };
+
+  const list = dataToShow.map((value:any, id:any) => {
     return <Course key={value.id.toString()} data={value} />;
   });
 
-
-  let prevData = {};
-  const handleClick = ():void => {
-    setPageCount(pageCount + 1);
-    prevData = {...prevData, ...data}
-    console.log(pageCount)
+  if(visibility) {
+    return (
+      <main>
+        <ul className="courses_list">{list}</ul>
+        <div className="courses_showmore">
+          <button onClick={handleClick}>Show More</button>
+        </div>
+        
+      </main>
+    )
+  } else {
+    return (
+      <main>
+        <ul className="courses_list">{list}</ul>
+      </main>
+    )
   }
-
-  useEffect(() => {
-  }, [pageCount])
-
-  switch(state) {
-    case apiStates.ERROR:
-      return <div>ERROR: {error || 'General error'}</div>;
-    case apiStates.SUCCESS:
-      return (
-        <main>
-          <ul className="courses_list">{list}</ul>
-          <div className="courses_showmore">
-            <button onClick={handleClick}>Show More</button>
-          </div>
-        </main>
-      )
-  case apiStates.LOADING:
-    default:
-      return <div>loading..</div>;
-  };
 }
 
 export default Home;

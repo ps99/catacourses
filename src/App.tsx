@@ -1,19 +1,10 @@
 
-import { useState, useContext, createContext, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
-} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Layout from './components/Layout/Layout'
-import {apiStates, useApi} from './tools';
-import {AuthManager, IUser} from './services/Auth.services'
+import {AuthManager} from './services/Auth.services'
 import './scss/App.scss';
 
 

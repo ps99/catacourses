@@ -1,13 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import {AuthManager} from '../../services/Auth.services'
 
 
 export const Header = (props:any) => {
   const [buttonName, setButtonName] = useState<any>('Login');
   const {currentState} = props;
-console.log('Header: props: ',props, buttonName)
-  const prevButtonName = buttonName;
   const handleLogout = async () => {
     if(buttonName === 'Logout') {
       AuthManager().logout();
@@ -18,7 +16,7 @@ console.log('Header: props: ',props, buttonName)
 
   useEffect(() => {
     currentState ? setButtonName('Logout') : setButtonName('Login');
-  }, [props.currentState]);
+  }, [currentState]);
 
   // useEffect(() => {
   //   prevButtonName === buttonName ? setButtonName('Login') : setButtonName('Logout');
