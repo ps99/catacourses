@@ -14,7 +14,7 @@ export const Layout = (props:any) => {
         <Login checkAuth={checkAuth} currentState={currentState}/>
       </Route>
       <Route path='/add'>
-        <AddNewCourse />
+        <AddNewCourse currentState={currentState}/>
       </Route>
       <Route exact path='/'>
         <Home />

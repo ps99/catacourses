@@ -2,34 +2,53 @@
 import { useEffect, useState } from 'react';
 import { apiStates, useApi } from '../../tools';
 import Course from "../Course/Course";
+import {CourseModel} from "../../mockfileModel"
 
 const LIMIT_OF_ITEMS = 9;
-let currentData:any = [];
 
 export const Home = () => {
-  const [dataToShow, setDataToShow] = useState([]);
+  const [dataToShow, setDataToShow] = useState<CourseModel | any>([]);
   const [pageCount, setPageCount] = useState(1);
   const [visibility, setVisisbility] = useState(true);
+  const [query, setQuery] = useState('');
+
+  const updateSearchString = (str: string) => {
+    setQuery(str);
+    // loadSearchResults(query);
+  };
+
+
+  // const loadSearchResults = (searchString: string): Promise<boolean> => {
+  //   if (searchString === '') {
+  //     return Promise.resolve(false);
+  //   }
+
+  //   return getSearchData(searchString)
+  //     .then((data) => {
+  //       setCoursesFound(data.map(dataToCourse));
+
+  //       return true;
+  //     })
+  //     .catch(() => false)
+  //     .finally(() => updateLoadingStatus(false));
+  // };
 
   useEffect(() => {
     getDataByPage(pageCount).then(data => {
       setPageCount(pageCount + 1);
-      loadData(data)
-      return true;
+      collectCourse(data)
     })
   }, [])
 
-  const loadData = (newData:any) => {
-    currentData = [...currentData, ...newData]
-    setDataToShow(currentData)
+  const collectCourse = (newData:any) => {
+    setDataToShow([...dataToShow, ...newData]);
   }
 
   const handleClick = ():void => {
     setPageCount(pageCount + 1);
     getDataByPage(pageCount).then(data => {
       data.length < LIMIT_OF_ITEMS && setVisisbility(false);
-      loadData(data)
-      return true;
+      collectCourse(data)
     })
   }
 
@@ -46,6 +65,9 @@ export const Home = () => {
   if(visibility) {
     return (
       <main>
+        <div className="course_search">
+          <input type="search" placeholder="Search a course..." />
+        </div>
         <ul className="courses_list">{list}</ul>
         <div className="courses_showmore">
           <button onClick={handleClick}>Show More</button>
@@ -56,6 +78,9 @@ export const Home = () => {
   } else {
     return (
       <main>
+        <div className="course_search">
+          <input type="search" placeholder="Search a course..." />
+        </div>
         <ul className="courses_list">{list}</ul>
       </main>
     )
