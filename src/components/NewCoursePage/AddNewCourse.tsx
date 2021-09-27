@@ -27,44 +27,35 @@ export const AddNewCourse = (props:any) => {
   const onCancelClick = () => redirectToMain();
 
   return (
-    <>
-      <div className="field">
-        <label className="label">Title</label>
-        <div className="control">
+    <main>
+      <div className="addNewCourseForm">
+        <h1>Add New Course</h1>
+        <form>
           <input
-            className="input"
+            className="form-control"
             type="text"
             placeholder="Course title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-      </div>
+            autoComplete="off"
+            onChange={(e) => setTitle(e.target.value)}/>
 
-      <div className="field">
-        <label className="label">Description</label>
-        <div className="control">
-          <textarea
-            className="textarea"
-            placeholder="Course description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}></textarea>
-        </div>
-      </div>
+            <textarea
+              className="form-control"
+              rows={3}
+              placeholder="Course description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}></textarea>
 
-      <div className="field is-grouped">
-        <div className="control">
-          <button
-            className="button is-link"
-            onClick={onSubmitClick}>Submit</button>
-        </div>
-        <div className="control">
-          <button
-            className="button is-link is-light"
-            onClick={onCancelClick}>Cancel</button>
-        </div>
+            <button
+              className="btn btn-primary btn-lg"
+              onClick={onSubmitClick}>Submit</button>
+
+            <button
+              className="btn btn-secondary btn-lg"
+              onClick={onCancelClick}>Cancel</button>
+        </form>
       </div>
-    </>
+    </main>
   );
 }
 
