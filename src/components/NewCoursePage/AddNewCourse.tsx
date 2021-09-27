@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { addCourse } from '../../services/Network.services';
 
 export const AddNewCourse = (props:any) => {
-  const {id, currentState} = props;
+  const {currentState} = props;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const history = useHistory();
@@ -12,19 +12,21 @@ export const AddNewCourse = (props:any) => {
     redirectToMain();
   }
 
-  const onSubmitClick = async () => {
+  const onSubmitClick = async (e:any) => {
+    e.preventDefault();
     await addCourse({
-      author: id,
       title,
       description,
-      date: new Date(),
-      id: -1,
-      rating: -1
+      authorId: currentState.id,
+      date: new Date()
     });
-    // redirectToMain();
+    redirectToMain();
   };
 
-  const onCancelClick = () => redirectToMain();
+  const onCancelClick = (e:any) => {
+    e.preventDefault();
+    redirectToMain();
+  }
 
   return (
     <main>

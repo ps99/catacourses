@@ -1,8 +1,8 @@
 export interface CourseModel {
-  id: number;
+  id?: number;
   date: Date;
   title: string;
   description: string;
-  author: string;
-  rating: number;
+  authorId: string;
+  rating?: number;
 }

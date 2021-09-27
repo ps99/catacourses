@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import {AuthManager} from '../../services/Auth.services'
+import { AuthManager } from '../../services/Auth.services'
 
 export const Header = (props:any) => {
   const {currentState} = props;
