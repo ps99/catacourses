@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import { addCourse } from '../../services/Network.services';
 
 export const AddNewCourse = (props:any) => {
   const {id, currentState} = props;
@@ -11,23 +12,14 @@ export const AddNewCourse = (props:any) => {
     redirectToMain();
   }
 
-  const addCourse = async (course: any) => {
-    const url = `${baseUrl}courses`;
-    const method = 'POST';
-    const headers = {'Content-Type': 'application/json'};
-    const lastCourseId = await getCoursesLastId();
-    const body = JSON.stringify({...course, id: lastCourseId + 1});
-  
-    return fetch(url, {method, headers, body});
-  }
-
   const onSubmitClick = async () => {
-    console.log(props)
     await addCourse({
-      authorID: id,
+      author: id,
       title,
       description,
       date: new Date(),
+      id: -1,
+      rating: -1
     });
     // redirectToMain();
   };

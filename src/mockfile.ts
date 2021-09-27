@@ -1,4 +1,4 @@
-import {CourseModel} from './mockfileModel'
+import {CourseModel} from './Interface'
 
 export const mockCourses: CourseModel[] = [{
   id: 1,
