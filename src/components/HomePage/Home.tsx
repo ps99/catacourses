@@ -1,10 +1,10 @@
 
-import { useEffect, useState } from 'react';
-import { apiStates, useApi } from '../../tools';
-import Course from "../Course/Course";
-import { CourseModel } from "../../Interface"
-import { Search } from "../Search/Search"
-import { getPageData, getSearchData } from "../../services/Network.services"
+import {useEffect, useState} from 'react';
+import {apiStatesTypes, useApi} from '../../tools';
+import Course from '../Course/Course';
+import {CourseModel} from '../../Interface'
+import {Search} from '../Search/Search'
+import {getPageData, getSearchData} from '../../services/Network.services'
 
 const LIMIT_OF_ITEMS = 9;
 

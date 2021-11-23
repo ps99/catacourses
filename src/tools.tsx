@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 
-export const apiStates = { //enum type
-  LOADING: 'LOADING',
-  SUCCESS: 'SUCCESS',
-  ERROR: 'ERROR',
+export enum apiStatesTypes {
+  LOADING = 'LOADING',
+  SUCCESS = 'SUCCESS',
+  ERROR = 'ERROR',
 };
 
 
 export const useApi = (pageCount:number) => {
   const url = `http://localhost:3000/courses?_page=${pageCount}&_limit=9`;
   const [data, setData] = useState({
-    state: apiStates.LOADING,
+    state: apiStatesTypes.LOADING,
     error: '',
     data: []
   });
@@ -19,20 +19,20 @@ export const useApi = (pageCount:number) => {
 
   useEffect(() => {
     setPartData({
-      state: apiStates.LOADING,
+      state: apiStatesTypes.LOADING,
     });
 
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setPartData({
-          state: apiStates.SUCCESS,
+          state: apiStatesTypes.SUCCESS,
           data
         });
       })
       .catch(() => {
         setPartData({
-          state: apiStates.ERROR,
+          state: apiStatesTypes.ERROR,
           error: 'fetch failed'
         });
       });
