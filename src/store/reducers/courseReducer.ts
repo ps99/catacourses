@@ -1,19 +1,26 @@
 import {CourseAction, CourseActionTypes, CourseState} from '../../types/course';
 
 const initialState: CourseState = {
-  users: [],
+  courses: [],
+  page: 0,
+  limit: 9,
   loading: false,
-  error: null
+  error: null,
+  isNotEmpty: true
 }
 
 export const courseReducer = (state = initialState, action: CourseAction): CourseState => {
   switch (action.type) {
     case CourseActionTypes.FETCH_COURSES:
-      return {loading: true, error: null, users: []}
+      return {...state, loading: true, error: null}
     case CourseActionTypes.FETCH_COURSES_SUCCESS:
-      return {loading: false, error: null, users: action.payload}
+      state.courses.push(...action.payload)
+      if(action.payload.length < state.limit) {
+        state.isNotEmpty = false
+      }
+      return {...state, page: state.page + 1, loading: false}
     case CourseActionTypes.FETCH_COURSES_ERROR:
-      return {loading: false, error: action.payload, users: []}
+      return {...state, loading: false, error: action.payload, courses: []}
     default:
       return state
   }

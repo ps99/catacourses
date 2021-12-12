@@ -1,24 +1,34 @@
+import {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
-import { AuthManager } from '../../services/Auth.services'
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../hooks/useActions';
+import { authLogout } from '../../store/actions/authAction';
 
-export const Header = (props:any) => {
-  const {currentState} = props;
+export const Header = () => {
+  const {isLoggedIn} = useTypedSelector(state => state.auth)
+  const {authCheck, authLogout} = useActions()
+
   const handleLogout = async () => {
-    if(!!currentState) {
-      AuthManager().logout();
-      props.checkAuth();
+    if(isLoggedIn) {
+      await authLogout();
     }
   }
+
+  useEffect(() => {
+    (async () => {
+      await authCheck();
+    })()
+  }, [isLoggedIn])
 
   return (
     <header>
       <div className="header">
         <ul className="header_navbar">
           <li><NavLink exact to="/">Home</NavLink></li>
-          {currentState && <li><NavLink to="/add">Add New Course</NavLink></li>}
+          {isLoggedIn && <li><NavLink to="/add">Add New Course</NavLink></li>}
         </ul>
         <ul className="header_navbar align-right">
-          <li><NavLink to="/login" onClick={handleLogout}>{currentState ? 'Logout' : 'Login'}</NavLink></li>
+          <li><NavLink to="/login" onClick={handleLogout}>{isLoggedIn ? 'Logout' : 'Login'}</NavLink></li>
         </ul>
       </div>
     </header>

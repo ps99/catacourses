@@ -9,13 +9,11 @@ export const fetchCourses = (page = 1, limit = 10) => {
             const response = await axios.get('http://localhost:3000/courses', {
                 params: {_page: page, _limit: limit}
             })
-            setTimeout(() => {
-                dispatch({type: CourseActionTypes.FETCH_COURSES_SUCCESS, payload: response.data})
-            }, 500)
+            dispatch({type: CourseActionTypes.FETCH_COURSES_SUCCESS, payload: response.data})
         } catch (e) {
             dispatch({
                 type: CourseActionTypes.FETCH_COURSES_ERROR,
-                payload: 'Произошла ошибка при загрузке списка дел'
+                payload: 'Error happend'
             })
         }
     }

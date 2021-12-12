@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import {userReducer} from './userReducer';
-import {courseReducer} from './courseReducer'
+import {courseReducer} from './courseReducer';
+import {authReducer} from './authReducer';
 
 export const rootReducer = combineReducers({
-  user: userReducer,
-  course: courseReducer
+  course: courseReducer,
+  auth: authReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

@@ -28,7 +28,7 @@ const App = () => {
 
   return (
     <Router>
-      <Header checkAuth={checkAuth} currentState={authState} />
+      <Header />
       <Layout checkAuth={checkAuth} currentState={authState} />
       <Footer />
     </Router>

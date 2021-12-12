@@ -43,8 +43,8 @@ export const AuthManager = () => {
   }
 
   const loadUserFromLocalStorage = ():JsonWebKey | null => {
-    const item_string = localStorage.getItem(ITEM_NAME) || 'null';
-    return JSON.parse(item_string);
+    const item_string = localStorage.getItem(ITEM_NAME);
+    return item_string ? JSON.parse(item_string) : null
   }
 
   const eraseUserFromLocalStorage = ():void => {

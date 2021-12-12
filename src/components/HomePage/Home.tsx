@@ -4,24 +4,23 @@ import {apiStatesTypes, useApi} from '../../tools';
 import Course from '../Course/Course';
 import {CourseModel} from '../../Interface'
 import {Search} from '../Search/Search'
-import {getPageData, getSearchData} from '../../services/Network.services'
+import {getSearchData} from '../../services/Network.services'
+import {useTypedSelector} from '../../hooks/useTypedSelector';
+import {useActions} from '../../hooks/useActions';
 
-const LIMIT_OF_ITEMS = 9;
+console.log(apiStatesTypes, useApi)
 
 export const Home = () => {
-  const [loading, setLoading] = useState(false);
-  const [dataToShow, setDataToShow] = useState<CourseModel | any>([]);
+  const {limit, courses, error, loading, isNotEmpty: isLoadMoreActive} = useTypedSelector(state => state.course)
+  const {fetchCourses} = useActions()
   const [coursesFound, setCoursesFound] = useState([]);
   const [pageCount, setPageCount] = useState(1);
-  const [visibility, setVisisbility] = useState(true);
   const [query, setQuery] = useState('');
 
   const updateSearchString = (str: string) => {
     setQuery(str);
     loadSearchResults(query);
   };
-
-  const updateLoadingStatus = (isLoading: boolean) => setLoading(isLoading);
 
   const loadSearchResults = (searchString: string): Promise<boolean> => {
     if (searchString === '') {
@@ -34,35 +33,24 @@ export const Home = () => {
 
         return true;
       })
-      .catch(() => false)
-      .finally(() => updateLoadingStatus(false));
+      .catch(() => false);
   };
 
   const dataToCourse = (course: any) => ({...course, date: new Date(course.date)} as CourseModel);
 
   useEffect(() => {
-    getPageData(pageCount).then(data => {
-      setPageCount(pageCount + 1);
-      collectCourse(data)
-    })
-  }, [])
+    fetchCourses(pageCount, limit)
+  }, [pageCount])
 
-  const collectCourse = (newData:any) => {
-    setDataToShow([...dataToShow, ...newData]);
-  }
-
-  const handleClick = async () => {
+  const handleClick = () => {
     setPageCount(pageCount + 1);
-    const data = await getPageData(pageCount);
-    data.length < LIMIT_OF_ITEMS && setVisisbility(false);
-    collectCourse(data);
   }
 
-  const list = dataToShow.map((value:any, id:any) => {
+  const list = courses.map((value:any, id:any) => {
     return <Course key={value.id.toString()} data={value} />;
   });
 
-  if(visibility) {
+  if(isLoadMoreActive) {
     return (
       <main>
         <Search updateSearchString={updateSearchString}/>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthManager } from '../../services/Auth.services';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../hooks/useActions';
 
 export const Login = (props:any) => {
   const {currentState} = props;
@@ -26,11 +27,15 @@ export const Login = (props:any) => {
     })
   }
 
+  const {user, isLoggedIn, error} = useTypedSelector(state => state.auth)
+  const {authLogin} = useActions()
+
   const handleSubmitClick = async (e:any) => {
     e.preventDefault();
     const {login, password} = authState;
-    const user = await AuthManager().login(login, password);
-    if(user) {
+    await authLogin(login, password);
+    const id = localStorage.getItem('user')
+    if(id) {
       history.push('/');
       props.checkAuth();
     }

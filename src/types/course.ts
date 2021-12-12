@@ -1,7 +1,11 @@
 export interface CourseState {
-  users: any[];
+  courses: any[];
+  page: number;
+  limit: number;
   loading: boolean;
   error: null | string;
+  isNotEmpty: boolean;
+  rating?: number;
 }
 
 export enum CourseActionTypes {
