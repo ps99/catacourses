@@ -50,27 +50,18 @@ export const Home = () => {
     return <Course key={value.id.toString()} data={value} />;
   });
 
-  if(isLoadMoreActive) {
-    return (
-      <main>
-        <Search updateSearchString={updateSearchString}/>
-        <ul className="courses_list">{list}</ul>
-        <div className="courses_showmore">
-          <button
-            className="btn btn-primary btn-lg"
-            onClick={handleClick}>Show More</button>
-        </div>
-        
-      </main>
-    )
-  } else {
-    return (
-      <main>
-        <Search updateSearchString={updateSearchString}/>
-        <ul className="courses_list">{list}</ul>
-      </main>
-    )
-  }
+  return (
+    <main>
+      <Search updateSearchString={updateSearchString}/>
+      <ul className="courses_list">{list}</ul>
+      {isLoadMoreActive && <div className="courses_showmore">
+        <button
+          className="btn btn-primary btn-lg"
+          onClick={handleClick}>Show More</button>
+      </div>}
+      
+    </main>
+  )
 }
 
 export default Home;
