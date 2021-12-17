@@ -1,6 +1,6 @@
 import Home from '../HomePage/Home';
 import Login from '../LoginPage/Login';
-import AddNewCourse from '../NewCoursePage/AddNewCourse';
+import NewCourse from '../NewCoursePage/NewCourse';
 import { Switch, Route } from 'react-router-dom';
 
 export const Layout = () => {
@@ -10,7 +10,7 @@ export const Layout = () => {
         <Login/>
       </Route>
       <Route path='/add'>
-        <AddNewCourse />
+        <NewCourse />
       </Route>
       <Route exact path='/'>
         <Home />

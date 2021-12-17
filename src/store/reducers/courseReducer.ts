@@ -1,23 +1,21 @@
 import {CourseAction, CourseActionTypes, CourseState} from '../../types/course';
+import axios from 'axios';
 
 const initialState: CourseState = {
-  courses: [],
-  page: 0,
-  limit: 3,
-  error: null,
-  loading: false,
-  isNotEmpty: true
+  id: 0,
+  title: 'New Course',
+  description: 'Description',
+  authorId: 'N/A',
+  date: new Date()
 }
 
 export const courseReducer = (state = initialState, action: CourseAction): CourseState => {
   switch (action.type) {
-    case CourseActionTypes.FETCH_COURSES_SUCCESS:
-      if(action.payload.length < state.limit) {
-        state.isNotEmpty = false
-      }
-      return {...state, page: state.page + 1, courses: [...state.courses, ...action.payload]}
-    case CourseActionTypes.FETCH_COURSES_ERROR:
-      return {...state, error: action.payload, courses: []}
+    case CourseActionTypes.COURSE_GET_LAST_ID:
+      return {...state, id: action.payload}
+    case CourseActionTypes.COURSE_ADD_NEW:
+      console.log(action.payload)
+      return {...state, id: action.payload + 1}
     default:
       return state
   }

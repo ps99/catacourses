@@ -1,32 +1,25 @@
 export interface CourseState {
-  courses: any[];
-  page: number;
-  limit: number;
-  loading: boolean;
-  error: null | string;
-  isNotEmpty: boolean;
+  id: number;
+  date: Date;
+  title: string;
+  description: string;
+  authorId: string;
   rating?: number;
 }
 
 export enum CourseActionTypes {
-  FETCH_COURSES = 'FETCH_COURSES',
-  FETCH_COURSES_SUCCESS = 'FETCH_COURSES_SUCCESS',
-  FETCH_COURSES_ERROR = 'FETCH_COURSES_ERROR'
+  COURSE_GET_LAST_ID = 'COURSE_GET_LAST_ID',
+  COURSE_ADD_NEW = 'COURSE_ADD_NEW'
 }
 
-interface FetchCoursesAction {
-  type: CourseActionTypes.FETCH_COURSES;
+interface CourseGetLastIdAction {
+  type: CourseActionTypes.COURSE_GET_LAST_ID;
   payload?: any;
 }
 
-interface FetchCoursesSuccessAction {
-  type: CourseActionTypes.FETCH_COURSES_SUCCESS;
+interface CourseAddNewAction {
+  type: CourseActionTypes.COURSE_ADD_NEW;
   payload?: any;
 }
 
-interface FetchCoursesErrorAction {
-  type: CourseActionTypes.FETCH_COURSES_ERROR;
-  payload?: any;
-}
-
-export type CourseAction = FetchCoursesAction | FetchCoursesSuccessAction | FetchCoursesErrorAction
+export type CourseAction = CourseGetLastIdAction | CourseAddNewAction;

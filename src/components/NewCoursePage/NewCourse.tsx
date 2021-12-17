@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { addCourse } from '../../services/Network.services';
 
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
+import {useActions} from '../../hooks/useActions';
 
-export const AddNewCourse = () => {
+export const NewCourse = () => {
   const {user, isLoggedIn} = useTypedSelector(state => state.auth);
+  const {id} = useTypedSelector(state => state.course);
+  const {addNewCourse, getCoursesLastId} = useActions();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -16,11 +18,18 @@ export const AddNewCourse = () => {
     redirectToMain();
   }
 
+  useEffect(() => {
+    if(id === 0) {
+      getCoursesLastId();
+    }
+  }, [])
+
   const onSubmitClick = async (e:any) => {
     e.preventDefault();
     const authorId = user || 'N/A';
     const date = new Date();
-    await addCourse({
+    await addNewCourse({
+      id,
       title,
       description,
       authorId,
@@ -61,4 +70,4 @@ export const AddNewCourse = () => {
   );
 }
 
-export default AddNewCourse;
+export default NewCourse;
