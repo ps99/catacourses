@@ -79,7 +79,7 @@ main {
 }
 
 .course_search {
-  padding: 0 15px 10px;
+  padding: 0 20px 10px;
 
   input {
     display: block;
@@ -110,7 +110,6 @@ main {
 
 .courses_list {
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
   margin: 0;
   padding: 0 10px 10px;
@@ -118,8 +117,8 @@ main {
 }
 
 .course_card__wrapper {
-  width: 32%;
-  padding: 10px 0 0;
+  width: 33.333333%;
+  padding: 10px;
 }
 
 .courses_showmore {

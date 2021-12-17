@@ -1,21 +1,17 @@
-import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useActions } from '../../hooks/useActions';
+import {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
+import {useActions} from '../../hooks/useActions';
 
-export const Login = (props:any) => {
-  const {currentState} = props;
+export const Login = () => {
   const [authState, setAuthState] = useState({
     login: '',
     password: '',
     message: ''
   });
 
-  useEffect(() => {
-    if(currentState) {
-      history.push('/');
-    }
-  }, [props.currentState])
+  const {user, isLoggedIn} = useTypedSelector(state => state.auth)
+  const {authLogin} = useActions()
 
   const history = useHistory();
   const handleChange = (e:any) => {
@@ -27,44 +23,29 @@ export const Login = (props:any) => {
     })
   }
 
-  const {user, isLoggedIn, error} = useTypedSelector(state => state.auth)
-  const {authLogin} = useActions()
-
   const handleSubmitClick = async (e:any) => {
     e.preventDefault();
     const {login, password} = authState;
     await authLogin(login, password);
-    const id = localStorage.getItem('user')
-    if(id) {
-      history.push('/');
-      props.checkAuth();
-    }
   }
 
   return (
     <main>
       <div className="loginForm">
-        <h1>Sign In</h1>
+        <h1>Sign In - {user ? user : 'Guest'}</h1>
         <form>
           <input
-            id="login"
-            className="form-control"
-            type="text"
-            placeholder="Login"
-            value={authState.login}
-            autoComplete="off"
-            onChange={handleChange} />
+            id="login" className="form-control" type="text"
+            placeholder="Login" autoComplete="off"
+            value={authState.login} onChange={handleChange} />
           <input
-            id="password"
-            type="password"
-            className="form-control"
+            id="password" className="form-control" type="password"
             placeholder="Password"
-            value={authState.password}
-            onChange={handleChange} />
+            value={authState.password} onChange={handleChange} />
           <button
             className="btn btn-primary btn-lg"
-            onClick={handleSubmitClick}
-            type='submit'>Sign In</button>
+            type='submit'
+            onClick={handleSubmitClick}>Sign In</button>
         </form>
         <div className="alert alert-success mt-2" style={{display: authState.message ? 'block' : 'none' }} role="alert"
           >{authState.message}</div>

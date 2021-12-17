@@ -1,6 +1,5 @@
 
 import {useEffect, useState} from 'react';
-import {apiStatesTypes, useApi} from '../../tools';
 import Course from '../Course/Course';
 import {CourseModel} from '../../Interface'
 import {Search} from '../Search/Search'
@@ -8,11 +7,9 @@ import {getSearchData} from '../../services/Network.services'
 import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {useActions} from '../../hooks/useActions';
 
-console.log(apiStatesTypes, useApi)
-
 export const Home = () => {
-  const {limit, courses, error, loading, isNotEmpty: isLoadMoreActive} = useTypedSelector(state => state.course)
-  const {fetchCourses} = useActions()
+  const {limit, courses, page, error, isNotEmpty: isLoadMoreActive} = useTypedSelector(state => state.course);
+  const {fetchCourses} = useActions();
   const [coursesFound, setCoursesFound] = useState([]);
   const [pageCount, setPageCount] = useState(1);
   const [query, setQuery] = useState('');
@@ -39,11 +36,11 @@ export const Home = () => {
   const dataToCourse = (course: any) => ({...course, date: new Date(course.date)} as CourseModel);
 
   useEffect(() => {
-    fetchCourses(pageCount, limit)
-  }, [pageCount])
+    fetchCourses()
+  }, [])
 
   const handleClick = () => {
-    setPageCount(pageCount + 1);
+    fetchCourses(page + 1)
   }
 
   const list = courses.map((value:any, id:any) => {
@@ -59,7 +56,6 @@ export const Home = () => {
           className="btn btn-primary btn-lg"
           onClick={handleClick}>Show More</button>
       </div>}
-      
     </main>
   )
 }

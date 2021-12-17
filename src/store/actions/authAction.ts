@@ -34,6 +34,6 @@ export const authLogout = () => {
   return async (dispatch: Dispatch<AuthAction>) => {
     const isLoggedIn = false;
     await localStorage.removeItem(ITEM_NAME);
-    dispatch({type: AuthActionTypes.AUTH_CHECK_SUCCESS, payload: isLoggedIn});
+    dispatch({type: AuthActionTypes.AUTH_LOGOUT, payload: isLoggedIn});
   }
 }

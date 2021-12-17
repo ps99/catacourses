@@ -1,20 +1,16 @@
 import Home from '../HomePage/Home';
 import Login from '../LoginPage/Login';
 import AddNewCourse from '../NewCoursePage/AddNewCourse';
-import {
-  Switch,
-  Route
-} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
-export const Layout = (props:any) => {
-  const { checkAuth, currentState } = props
+export const Layout = () => {
   return (
     <Switch>
       <Route path='/login'>
-        <Login checkAuth={checkAuth} currentState={currentState}/>
+        <Login/>
       </Route>
       <Route path='/add'>
-        <AddNewCourse currentState={currentState}/>
+        <AddNewCourse />
       </Route>
       <Route exact path='/'>
         <Home />

@@ -1,12 +1,10 @@
-import {useEffect, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
-import { authLogout } from '../../store/actions/authAction';
 
 export const Header = () => {
   const {isLoggedIn} = useTypedSelector(state => state.auth)
-  const {authCheck, authLogout} = useActions()
+  const {authLogout} = useActions()
 
   const handleLogout = async () => {
     if(isLoggedIn) {
@@ -14,15 +12,10 @@ export const Header = () => {
     }
   }
 
-  useEffect(() => {
-    (async () => {
-      await authCheck();
-    })()
-  }, [isLoggedIn])
-
   return (
     <header>
       <div className="header">
+        <h3>Auth Status: {isLoggedIn.toString()}</h3>
         <ul className="header_navbar">
           <li><NavLink exact to="/">Home</NavLink></li>
           {isLoggedIn && <li><NavLink to="/add">Add New Course</NavLink></li>}

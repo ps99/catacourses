@@ -2,23 +2,29 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { addCourse } from '../../services/Network.services';
 
-export const AddNewCourse = (props:any) => {
-  const {currentState} = props;
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+
+export const AddNewCourse = () => {
+  const {user, isLoggedIn} = useTypedSelector(state => state.auth);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
   const history = useHistory();
   const redirectToMain = () => history.push('/');
-  if(!currentState) {
+
+  if(!isLoggedIn) {
     redirectToMain();
   }
 
   const onSubmitClick = async (e:any) => {
     e.preventDefault();
+    const authorId = user || 'N/A';
+    const date = new Date();
     await addCourse({
       title,
       description,
-      authorId: currentState.id,
-      date: new Date()
+      authorId,
+      date
     });
     redirectToMain();
   };
@@ -35,18 +41,12 @@ export const AddNewCourse = (props:any) => {
         <form>
           <input
             className="form-control"
-            type="text"
-            placeholder="Course title"
-            value={title}
-            autoComplete="off"
-            onChange={(e) => setTitle(e.target.value)}/>
+            type="text" autoComplete="off" placeholder="Course title"
+            value={title} onChange={(e) => setTitle(e.target.value)}/>
 
             <textarea
-              className="form-control"
-              rows={3}
-              placeholder="Course description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}></textarea>
+              className="form-control" rows={3} placeholder="Course description"
+              value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
 
             <button
               className="btn btn-primary btn-lg"
