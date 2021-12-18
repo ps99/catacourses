@@ -15,7 +15,7 @@ export const getCoursesLastId = () => {
   }
 }
 
-export const addNewCourse = (newCourse:CourseState) => {
+export const addNewCourse = (newCourse: CourseState) => {
   return async (dispatch: Dispatch<CourseAction>) => {
     const headers: any = { // TODO: change type <any> - ?
       'Content-Type': 'application/json'
@@ -23,6 +23,6 @@ export const addNewCourse = (newCourse:CourseState) => {
     axios.post(`${baseUrl}courses`, newCourse, headers)
       .then((response) => {
         dispatch({type: CourseActionTypes.COURSE_ADD_NEW, payload: newCourse.id});
-      })
+      });
   }
 }

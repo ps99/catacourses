@@ -1,19 +1,31 @@
 import { useEffect, useState } from 'react';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
+import {useActions} from '../../hooks/useActions';
 
-type SearchFieldProps = {updateSearchString: (searchString: string) => void};
-type SearchFieldState = {searchString: string};
-
-export const Search = (props:any) => {
+export const Search = () => {
+  const {courses, error} = useTypedSelector(state => state.list);
+  const {searchCourses, searchPrevent} = useActions();
   const [query, setQuery] = useState('');
-  let timerId:any = null;
+
+  let timerId: any;
 
   useEffect(() => {
+    if(query === '') {
+      searchPrevent();
+      return
+    }
+
     timerId = setTimeout(() => {
-      props.updateSearchString(query);
+      searchCourses(query);
     }, 1000)
 
     return () => clearTimeout(timerId);
   }, [query])
+
+  const handleChange = (e: any) => {
+    // searchCourses(e.target.value)
+    searchCourses(query);
+  }
 
   return (
     <div className="course_search">
@@ -22,7 +34,7 @@ export const Search = (props:any) => {
         type="search"
         placeholder="Search a course..."
         value={query}
-        onChange={e => setQuery(e.target.value)} />
+        onChange={(e) => setQuery(e.target.value)} />
     </div>
   )
 }

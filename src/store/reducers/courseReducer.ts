@@ -14,7 +14,6 @@ export const courseReducer = (state = initialState, action: CourseAction): Cours
     case CourseActionTypes.COURSE_GET_LAST_ID:
       return {...state, id: action.payload}
     case CourseActionTypes.COURSE_ADD_NEW:
-      console.log(action.payload)
       return {...state, id: action.payload + 1}
     default:
       return state

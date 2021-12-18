@@ -108,7 +108,8 @@ main {
   }
 }
 
-.courses_list {
+.courses_list,
+.search_list {
   display: flex;
   flex-wrap: wrap;
   margin: 0;

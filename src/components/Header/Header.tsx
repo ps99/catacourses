@@ -3,8 +3,8 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 
 export const Header = () => {
-  const {isLoggedIn} = useTypedSelector(state => state.auth)
-  const {authLogout} = useActions()
+  const {isLoggedIn} = useTypedSelector(state => state.auth);
+  const {authLogout} = useActions();
 
   const handleLogout = async () => {
     if(isLoggedIn) {
@@ -15,7 +15,6 @@ export const Header = () => {
   return (
     <header>
       <div className="header">
-        <h3>Auth Status: {isLoggedIn.toString()}</h3>
         <ul className="header_navbar">
           <li><NavLink exact to="/">Home</NavLink></li>
           {isLoggedIn && <li><NavLink to="/add">Add New Course</NavLink></li>}

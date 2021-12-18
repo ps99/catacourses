@@ -1,57 +1,37 @@
 
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import Course from '../Course/Course';
-import {CourseModel} from '../../Interface'
 import {Search} from '../Search/Search'
-import {getSearchData} from '../../services/Network.services'
 import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {useActions} from '../../hooks/useActions';
 
 export const Home = () => {
-  const {limit, courses, page, error, isNotEmpty: isLoadMoreActive} = useTypedSelector(state => state.list);
-  const {fetchCourses, getCoursesLastId} = useActions();
-  const [coursesFound, setCoursesFound] = useState([]);
-  const [pageCount, setPageCount] = useState(1);
-  const [query, setQuery] = useState('');
-
-  const updateSearchString = (str: string) => {
-    setQuery(str);
-    loadSearchResults(query);
-  };
-
-  const loadSearchResults = (searchString: string): Promise<boolean> => {
-    if (searchString === '') {
-      return Promise.resolve(false);
-    }
-
-    return getSearchData(searchString)
-      .then((data) => {
-        setCoursesFound(data.map(dataToCourse));
-
-        return true;
-      })
-      .catch(() => false);
-  };
-
-  const dataToCourse = (course: any) => ({...course, date: new Date(course.date)} as CourseModel);
+  const {limit, courses, page, error, isNotEmpty: isLoadMoreActive, isSearch, searchResult} = useTypedSelector(state => state.list);
+  const {fetchCourses} = useActions();
 
   useEffect(() => {
-    fetchCourses(page, limit);
+    if(page === 0) fetchCourses(page, limit);
   }, [])
 
   const handleClick = () => {
     fetchCourses(page + 1,limit)
   }
 
-  const list = courses.map((value:any, id:any) => {
+  const list = courses.map((value:any) => {
+    return <Course key={value.id.toString()} data={value} />;
+  });
+
+  const listSearch = searchResult.map((value:any) => {
     return <Course key={value.id.toString()} data={value} />;
   });
 
   return (
     <main>
-      <Search updateSearchString={updateSearchString}/>
-      <ul className="courses_list">{list}</ul>
-      {isLoadMoreActive && <div className="courses_showmore">
+      <Search />
+      {isSearch && <ul className="search_list">{listSearch}</ul>}
+
+      {!isSearch && <ul className="courses_list">{list}</ul>}
+      {!isSearch && isLoadMoreActive && <div className="courses_showmore">
         <button
           className="btn btn-primary btn-lg"
           onClick={handleClick}>Show More</button>

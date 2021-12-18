@@ -1,9 +1,10 @@
 import {Dispatch} from 'redux';
 import axios from 'axios';
-import {ListAction, ListActionTypes, ListState} from '../../types/list';
+import {ListAction, ListActionTypes} from '../../types/list';
+
+const baseUrl = 'http://localhost:3000/';
 
 export const fetchCourses = (page:number, limit:number) => {
-  const baseUrl = 'http://localhost:3000/';
   return async (dispatch: Dispatch<ListAction>) => {
     try {
       dispatch({type: ListActionTypes.FETCH_LIST_COURSES_START});
@@ -17,5 +18,28 @@ export const fetchCourses = (page:number, limit:number) => {
         payload: 'Error happend'
       });
     }
+  }
+}
+
+export const searchCourses = (query: string) => {
+  return async (dispatch: Dispatch<ListAction>) => {
+    try {
+      dispatch({type: ListActionTypes.FETCH_SEARCH_COURSES_START});
+      const response = await axios.get(`${baseUrl}courses`, {
+        params: {q: query}
+      })
+      dispatch({type: ListActionTypes.FETCH_SEARCH_COURSES_SUCCESS, payload: response.data});
+    } catch (e) {
+      dispatch({
+        type: ListActionTypes.FETCH_LIST_COURSES_ERROR,
+        payload: 'Error happend'
+      });
+    }
+  }
+}
+
+export const searchPrevent = () => {
+  return async (dispatch: Dispatch<ListAction>) => {
+    dispatch({type: ListActionTypes.FETCH_SEARCH_COURSES_END});
   }
 }
