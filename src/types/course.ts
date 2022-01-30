@@ -4,12 +4,14 @@ export interface CourseState {
   title: string;
   description: string;
   authorId: string;
-  rating?: number;
+  rating?: number | null;
+  ratingCollection?: object | null;
 }
 
 export enum CourseActionTypes {
   COURSE_GET_LAST_ID = 'COURSE_GET_LAST_ID',
-  COURSE_ADD_NEW = 'COURSE_ADD_NEW'
+  COURSE_ADD_NEW = 'COURSE_ADD_NEW',
+  COURSE_UPDATE_RATING = 'COURSE_UPDATE_RATING'
 }
 
 interface CourseGetLastIdAction {
@@ -22,4 +24,9 @@ interface CourseAddNewAction {
   payload?: any;
 }
 
-export type CourseAction = CourseGetLastIdAction | CourseAddNewAction;
+interface CourseUpdateRatingAction {
+  type: CourseActionTypes.COURSE_UPDATE_RATING;
+  payload?: any;
+}
+
+export type CourseAction = CourseGetLastIdAction | CourseAddNewAction | CourseUpdateRatingAction;

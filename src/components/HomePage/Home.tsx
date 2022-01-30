@@ -6,7 +6,8 @@ import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {useActions} from '../../hooks/useActions';
 
 export const Home = () => {
-  const {limit, courses, page, error, isNotEmpty: isLoadMoreActive, isSearch, searchResult} = useTypedSelector(state => state.list);
+  const {limit, courses, page, error, isOver, isSearch, searchResult} = useTypedSelector(state => state.list);
+  const {user} = useTypedSelector(state => state.auth)
   const {fetchCourses} = useActions();
 
   useEffect(() => {
@@ -18,20 +19,23 @@ export const Home = () => {
   }
 
   const list = courses.map((value:any) => {
-    return <Course key={value.id.toString()} data={value} />;
+    return <Course key={value.id.toString()} data={value} user={user} />;
   });
 
   const listSearch = searchResult.map((value:any) => {
-    return <Course key={value.id.toString()} data={value} />;
+    return <Course key={value.id.toString()} data={value} user={user} />;
   });
 
   return (
     <main>
       <Search />
-      {isSearch && <ul className="search_list">{listSearch}</ul>}
+      {isSearch ? (
+        <ul className="search_list">{listSearch}</ul>
+      ) : (
+        <ul className="courses_list">{list}</ul>
+      )}
 
-      {!isSearch && <ul className="courses_list">{list}</ul>}
-      {!isSearch && isLoadMoreActive && <div className="courses_showmore">
+      {!isSearch && !isOver && <div className="courses_showmore">
         <button
           className="btn btn-primary btn-lg"
           onClick={handleClick}>Show More</button>

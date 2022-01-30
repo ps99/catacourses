@@ -2,7 +2,7 @@ import {Dispatch} from 'redux';
 import axios from 'axios';
 import {CourseAction, CourseActionTypes, CourseState} from '../../types/course';
 
-const baseUrl = 'http://localhost:3000/';
+const baseUrl = 'http://localhost:3030/';
 
 export const getCoursesLastId = () => {
   return async (dispatch: Dispatch<CourseAction>) => {
@@ -18,11 +18,22 @@ export const getCoursesLastId = () => {
 export const addNewCourse = (newCourse: CourseState) => {
   return async (dispatch: Dispatch<CourseAction>) => {
     const headers: any = { // TODO: change type <any> - ?
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json;charset=utf-8'
     };
     axios.post(`${baseUrl}courses`, newCourse, headers)
       .then((response) => {
         dispatch({type: CourseActionTypes.COURSE_ADD_NEW, payload: newCourse.id});
       });
+  }
+}
+
+export const updateCourseRating = (targetCourse: CourseState) => {
+  return async (dispatch: Dispatch<CourseAction>) => {
+    const headers: any = { // TODO: change type <any> - ?
+      'Content-Type': 'application/json;charset=utf-8'
+    };
+    await axios.put(`${baseUrl}courses/${targetCourse.id}`,
+      targetCourse, headers);
+    dispatch({type: CourseActionTypes.COURSE_UPDATE_RATING, payload: targetCourse});
   }
 }

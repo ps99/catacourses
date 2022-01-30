@@ -6,7 +6,9 @@ const initialState: CourseState = {
   title: 'New Course',
   description: 'Description',
   authorId: 'N/A',
-  date: new Date()
+  date: new Date(),
+  rating: null,
+  ratingCollection: null
 }
 
 export const courseReducer = (state = initialState, action: CourseAction): CourseState => {
@@ -15,6 +17,8 @@ export const courseReducer = (state = initialState, action: CourseAction): Cours
       return {...state, id: action.payload}
     case CourseActionTypes.COURSE_ADD_NEW:
       return {...state, id: action.payload + 1}
+    case CourseActionTypes.COURSE_UPDATE_RATING:
+      return {...state, ...action.payload}
     default:
       return state
   }

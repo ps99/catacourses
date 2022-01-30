@@ -2,7 +2,7 @@ import {Dispatch} from 'redux';
 import axios from 'axios';
 import {ListAction, ListActionTypes} from '../../types/list';
 
-const baseUrl = 'http://localhost:3000/';
+const baseUrl = 'http://localhost:3030/';
 
 export const fetchCourses = (page:number, limit:number) => {
   return async (dispatch: Dispatch<ListAction>) => {

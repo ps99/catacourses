@@ -5,7 +5,7 @@ export interface ListState {
   limit: number;
   loading: boolean;
   error: null | string;
-  isNotEmpty: boolean;
+  isOver: boolean;
   isSearch: boolean;
 }
 

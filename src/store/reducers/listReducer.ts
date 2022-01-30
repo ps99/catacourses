@@ -7,7 +7,7 @@ const initialState: ListState = {
   limit: 4,
   error: null,
   loading: false,
-  isNotEmpty: true,
+  isOver: false,
   isSearch: false
 }
 
@@ -16,9 +16,7 @@ export const listReducer = (state = initialState, action: ListAction): ListState
     case ListActionTypes.FETCH_LIST_COURSES_START:
       return {...state, loading: true, error: null}
     case ListActionTypes.FETCH_LIST_COURSES_SUCCESS:
-      if(action.payload.length < state.limit) {
-        state.isNotEmpty = false
-      }
+      state.isOver = action.payload.length < state.limit
       return {...state, loading: false, page: state.page + 1, courses: [...state.courses, ...action.payload]}
     case ListActionTypes.FETCH_LIST_COURSES_ERROR:
       return {...state, error: action.payload, courses: []}

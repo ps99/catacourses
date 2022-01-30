@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {useActions} from '../../hooks/useActions';
@@ -23,6 +23,10 @@ export const Login = () => {
     })
   }
 
+  useEffect(()=>{
+    console.log('isLoggedIn: ',isLoggedIn)
+  },[isLoggedIn])
+
   const handleSubmitClick = async (e:any) => {
     e.preventDefault();
     const {login, password} = authState;
@@ -32,7 +36,7 @@ export const Login = () => {
   return (
     <main>
       <div className="loginForm">
-        <h1>Sign In - {user ? user : 'Guest'}</h1>
+        <h1>Sign In - {user ? user : 'Guest'} - {isLoggedIn ? 'Logged In' : 'Logged Out'}</h1>
         <form>
           <input
             id="login" className="form-control" type="text"

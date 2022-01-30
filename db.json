@@ -14,6 +14,11 @@
       "id": "mike",
       "name": "Mike",
       "password": "123456"
+    },
+    {
+      "id": "esm",
+      "name": "Esm",
+      "password": "1234"
     }
   ],
   "courses": [
@@ -23,7 +28,11 @@
       "description": "Angular 4222 course",
       "authorId": "pablo",
       "date": "2020-04-16T10:55:55.058Z",
-      "rating": 3
+      "rating": 3,
+      "ratingCollection": {
+        "admin": 1,
+        "esm": 5
+      }
     },
     {
       "id": 2,
@@ -31,7 +40,11 @@
       "description": "Angular.js course",
       "authorId": "mike",
       "date": "2021-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": 3,
+      "ratingCollection": {
+        "admin": 1,
+        "esm": 5
+      }
     },
     {
       "id": 3,
@@ -39,7 +52,11 @@
       "description": "Angular 6 course",
       "authorId": "pablo",
       "date": "2020-05-16T10:55:55.058Z",
-      "rating": 3
+      "rating": 1.5,
+      "ratingCollection": {
+        "admin": 1,
+        "esm": 2
+      }
     },
     {
       "id": 4,
@@ -47,7 +64,11 @@
       "description": "Angular 7 course",
       "authorId": "mike",
       "date": "2019-04-16T10:55:55.058Z",
-      "rating": 5
+      "rating": 1.5,
+      "ratingCollection": {
+        "admin": 1,
+        "esm": 2
+      }
     },
     {
       "id": 5,

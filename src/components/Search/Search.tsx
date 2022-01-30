@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {useActions} from '../../hooks/useActions';
 
 export const Search = () => {
-  const {courses, error} = useTypedSelector(state => state.list);
   const {searchCourses, searchPrevent} = useActions();
   const [query, setQuery] = useState('');
 
@@ -20,12 +18,7 @@ export const Search = () => {
     }, 1000)
 
     return () => clearTimeout(timerId);
-  }, [query])
-
-  const handleChange = (e: any) => {
-    // searchCourses(e.target.value)
-    searchCourses(query);
-  }
+  }, [query]);
 
   return (
     <div className="course_search">
