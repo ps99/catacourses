@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {useActions} from '../../hooks/useActions';
+import { Redirect } from 'react-router-dom';
 
 export const Login = () => {
   const [authState, setAuthState] = useState({
@@ -13,7 +14,6 @@ export const Login = () => {
   const {user, isLoggedIn} = useTypedSelector(state => state.auth)
   const {authLogin} = useActions()
 
-  const history = useHistory();
   const handleChange = (e:any) => {
     const {id, value} = e.target
 
@@ -34,7 +34,9 @@ export const Login = () => {
   }
 
   return (
-    <main>
+    
+    <>
+    {isLoggedIn ? <Redirect to="/" /> : <main>
       <div className="loginForm">
         <h1>Sign In - {user ? user : 'Guest'} - {isLoggedIn ? 'Logged In' : 'Logged Out'}</h1>
         <form>
@@ -55,6 +57,8 @@ export const Login = () => {
           >{authState.message}</div>
       </div>
     </main>
+    }
+    </>
   )
 }
 
