@@ -1,39 +1,26 @@
-
-import React, { useState } from 'react';
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
-import Layout from './components/Layout/Layout'
-import {apiStates, useApi} from './tools';
+import {useEffect} from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import Layout from './components/Layout/Layout';
+import {useActions} from './hooks/useActions';
 import './scss/App.scss';
 
 
+const App = () => {
+  const {authCheck} = useActions();
 
-function App(props:any) {
-  const [ pageCount, setPageCount ] = useState(1);
-  let { state, error, data } = useApi(pageCount);
+  useEffect(() => {
+    authCheck();
+  }, []);
 
-  console.log(data)
-
-  function updateCurrentPage() {
-    setPageCount(pageCount + 1);
-    console.log(pageCount)
-  }
-
-  switch(state) {
-    case apiStates.ERROR:
-      return <div>ERROR: {error || 'General error'}</div>;
-    case apiStates.SUCCESS:
-      return (
-        <>
-          <Header />
-          <Layout data={data}/>
-          <Footer updateCurrentPage={updateCurrentPage} />
-        </>
-      )
-    case apiStates.LOADING:
-      default:
-        return <div>loading..</div>;
-  };
+  return (
+    <Router>
+      <Header />
+      <Layout />
+      <Footer />
+    </Router>
+  )
 }
 
 export default App;

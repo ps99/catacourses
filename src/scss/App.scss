@@ -4,76 +4,113 @@
   box-sizing: border-box;
 }
 
-html {
+html, body {
   height: 100%;
 }
 
 body {
   position: relative;
   min-height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 .wrap {
   display: flex;
+  min-height: 100%;
   flex-direction: column;
   flex-grow: 1;
-  padding: 60px 0 92px;
+}
+
+main {
+  padding: 20px 0;
 }
 
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
-  flex-grow: 1;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  height: 60px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
   padding: 0 20px;
   background: #fff;
-}
-
-.header_logo img {
-  height: 100%;
 }
 
 .header_navbar {
   display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 20px 0;
   list-style: none;
+
+  &.align-right {
+    margin-left: auto;
+  }
 
   li {
     padding: 0 5px;
   }
+
+  a {
+    display: block;
+    padding: .5rem 1rem;
+    color: #0d6efd;
+    text-decoration: none;
+    border: 0;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+
+    &:hover {
+      color: #333;
+      background-color: rgba(13,110,253,.5);
+    }
+
+    &.active {
+      color: #fff;
+      background-color: #0d6efd;
+    }
+  }
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.course_search {
+  padding: 0 20px 10px;
+
+  input {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+    &:focus {
+      color: #212529;
+      background-color: #fff;
+      border-color: #86b7fe;
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    }
+  }
+}
+
+.courses_list,
+.search_list {
   display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  height: 92px;
-  padding: 0 20px;
-  text-align: center;
-  background: #fff;
-}
-
-.footer_loadmore {
-  padding: 10px 0;
-  text-align: center;
-}
-
-main {
-  min-height: 100%;
-}
-
-.courses_list {
-  display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
   margin: 0;
   padding: 0 10px 10px;
@@ -81,23 +118,166 @@ main {
 }
 
 .course_card__wrapper {
-  width: 32%;
-  padding: 10px 0 0;
+  width: 33.333333%;
+  padding: 10px;
+}
+
+.courses_showmore {
+  padding: 0 0 10px;
+  text-align: center;
 }
 
 .course_card {
-  padding: 10px;
-  border: solid 1px #333;
-  border-radius: 10px;
+  position: relative;
+  top: 0;
+  z-index: 1;
+  border-radius: 4px;
   width: 100%;
+  border: 1px solid #f2f8f9;
+
+  display: block;
+  top: 0px;
+  position: relative;
+  background-color: #f2f8f9;
+  padding: 32px 24px;
+  text-decoration: none;
+  z-index: 1;
+  overflow: hidden;
+
+  &:hover {
+    transition: all 0.2s ease-out;
+    box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+    top: -4px;
+    border: 1px solid #cccccc;
+    background-color: white;
+  }
 }
 
 .course_card__title {
   padding: 0 0 5px;
   font-weight: 700;
+}
 
-  em {
-    font-weight: normal;
-    font-size: 0.85em;
+.course_card__date {
+  padding: 0 0 5px;
+  font-weight: normal;
+  font-size: 0.75em;
+}
+
+.loginForm,
+.addNewCourseForm {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+
+  .form-control {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+    &:focus {
+      z-index: 2;
+      color: #212529;
+      background-color: #fff;
+      border-color: #86b7fe;
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    }
   }
+
+  input {
+    height: 3.5rem;
+  }
+
+  input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  input[type="password"] {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  textarea {
+    margin-top: 20px;
+    font-family: inherit;
+    resize: vertical;
+  }
+
+  .form-floating>.form-control:focus~label,
+  .form-floating>.form-control:not(:placeholder-shown)~label,
+  .form-floating>.form-select~label {
+    opacity: .65;
+    transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+  padding: 0 20px;
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-lg {
+  padding: .5rem 1rem;
+  font-size: 1.25rem;
+  border-radius: .3rem;
 }

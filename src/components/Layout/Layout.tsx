@@ -1,14 +1,21 @@
-import Course from '../Course/Course'
+import Home from '../HomePage/Home';
+import Login from '../LoginPage/Login';
+import NewCourse from '../NewCoursePage/NewCourse';
+import { Switch, Route } from 'react-router-dom';
 
-export const Layout = (props:any) => {
-  const list = props.data.map((value:any) => {
-    return <Course key={value.id.toString()} data={value} />;
-  });
-
+export const Layout = () => {
   return (
-    <main>
-      <ul className="courses_list">{list}</ul>
-    </main>
+    <Switch>
+      <Route path='/login'>
+        <Login/>
+      </Route>
+      <Route path='/add'>
+        <NewCourse />
+      </Route>
+      <Route exact path='/'>
+        <Home />
+      </Route>
+    </Switch>
   )
 }
 
